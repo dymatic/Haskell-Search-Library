@@ -1,5 +1,5 @@
-module HelperMath.Aux
-	( avg
+module HelperMath.Aux(
+      avg
 	, sqr
 	, stdDev
 	) where

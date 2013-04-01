@@ -1,19 +1,14 @@
 module WordStat(
-	 pos
-	, refPos
+	  refPos
 	, letterNumber
 	, wordNumber
 	, isSimilarWord 
 	) where
+
 import Data.List
 import HelperMath.Aux
+import HelperLists.AuxList
 
-pos :: (Eq a) => [a] -> a -> Int
-pos [] _ = -1
-pos (x:xs) y
-    | not $ elem y (x:xs) = -1
-    | x == y =  0
-    | otherwise = 1 + pos xs y
 
 -- Get the same element from another range as one element of the first range.
 refPos :: (Eq a) => [a] -> [b] -> a -> b
@@ -26,10 +21,13 @@ letterNumber x = refPos (' ':['a'..'z'] ++ ['A'..'Z']) [0..52] x
 wordNumber :: String -> Int
 wordNumber xs = sum $ map letterNumber xs
 
-
-
-
+-- Is length the same? Or is the word similar?
 isSimilarWord :: String -> String -> Bool
-isSimilarWord w1 w2 = stdDev [realToFrac ws1, realToFrac ws2] < realToFrac ((length w1) + (length w2))
+isSimilarWord w1 w2 = or [and 
+							[stdDev [realToFrac ws1, realToFrac ws2] < realToFrac (lw1 + lw2),
+						    abs (lw1 - lw2) < 5],
+						  (lw1 == lw2)]
 						where ws1 = wordNumber w1
 						      ws2 = wordNumber w2
+						      lw1 = length w1
+						      lw2 = length w2
