@@ -1,0 +1,10 @@
+This is a small statistical analyzation library written in Haskell. It's pretty proof-of-concept and the first set of Libraries I've written in Haskell.
+
+--Uses
+These libraries work surprisingly well since I just fudged the algorithm. Basically how it works is the longer the words in combination are, the more that is allowed to be wrong. So, it is possible that "ZZZZZZZZZZZZZZZZZZZ" could be equal to "j", but for most intents and purposes the algorithm works well as is. 
+
+--Plans
+More support and a better algorithm. I plan to add file support before I abandon the library and I intent to fix the length variance issue.
+
+--License
+Assume that these libraries are written under the GNU LGPL. 
