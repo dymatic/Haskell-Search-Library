@@ -1,11 +1,36 @@
 module HelperLists.AuxList(
-	  pos
+	  numberOf
+	 ,numberNot
+	 ,mostly
+	 ,allEq
+	 ,pos
 	 ,subList
 	 ,splitInto
 	 ,after
 	 ,filterBreak
 	 ,splitOn
 	) where
+
+--numberOf :: (Eq a) => [a] -> a -> Int
+--numberOf [] _ = 0
+--numberOf (x:xs) y
+--	| x == y = 1 + numberOf xs y
+--	| otherwise = numberOf xs y
+
+numberOf :: (Eq a) => [a] -> a -> Int
+numberOf xs t = sum $ map (\n -> if n == t then 1 else 0) xs
+
+numberNot :: (Eq a) => [a] -> a -> Int
+numberNot xs t = sum $ map (\n -> if n == t then 0 else 1) xs
+
+mostly :: (Eq a) => [a] -> a -> Bool
+mostly (xs) y = numberOf xs y > numberNot xs y
+
+allEq :: (Eq a) => [a] -> a -> Bool
+allEq [] _ = True
+allEq (x:xs) y
+	| x /= y = False
+	| otherwise = allEq xs y
 
 pos :: (Eq a) => [a] -> a -> Int
 pos [] _ = -1

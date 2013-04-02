@@ -4,6 +4,7 @@ module HelperMath.Aux(
 	, stdDev
 	) where
 import Data.List
+
 avg :: (Real a, Fractional b) => [a] -> b
 avg xs = realToFrac (sum xs) / genericLength xs
 

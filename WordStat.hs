@@ -3,6 +3,7 @@ module WordStat(
 	, letterNumber
 	, wordNumber
 	, isSimilarWord 
+	, isSimilarList
 	) where
 
 import Data.List
@@ -31,3 +32,7 @@ isSimilarWord w1 w2 = or [and
 						      ws2 = wordNumber w2
 						      lw1 = length w1
 						      lw2 = length w2
+
+isSimilarList :: [String] -> [String] -> Bool
+isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
+					  in mostly values True
