@@ -4,7 +4,7 @@ module HelperLists.AuxList(
 	 ,splitInto
 	 ,after
 	 ,filterBreak
-	 ,split
+	 ,splitOn
 	) where
 
 pos :: (Eq a) => [a] -> a -> Int
@@ -32,11 +32,8 @@ filterBreak f (x:xs)
 	| (f x) = x : filterBreak f xs
 	| otherwise = []
 
-split :: String -> Char -> [String]
-split xs c = filter (/="") (splitOn xs c)
-
 splitOn :: String -> Char -> [String]
-splitOn [] _ = [""]
+splitOn [] _ = []
 splitOn xs c
 	| c `elem` xs = (filterBreak (/= c) xs) : splitOn (after xs c) c
-	| otherwise = xs:[""]
+	| otherwise = xs:[]
