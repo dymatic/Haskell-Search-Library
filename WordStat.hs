@@ -36,3 +36,5 @@ isSimilarWord w1 w2 = or [and
 isSimilarList :: [String] -> [String] -> Bool
 isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
 					  in mostly values True
+
+--Later make a function that can tell you which list is more similar (think: QS)

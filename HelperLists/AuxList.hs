@@ -21,21 +21,19 @@ numberOf :: (Eq a) => [a] -> a -> Int
 numberOf xs t = sum $ map (\n -> if n == t then 1 else 0) xs
 
 numberNot :: (Eq a) => [a] -> a -> Int
-numberNot xs t = sum $ map (\n -> if n == t then 0 else 1) xs
+numberNot xs t = (length xs) - (numberOf xs t)
 
 mostly :: (Eq a) => [a] -> a -> Bool
 mostly (xs) y = numberOf xs y > numberNot xs y
 
 allEq :: (Eq a) => [a] -> a -> Bool
 allEq [] _ = True
-allEq (x:xs) y
-	| x /= y = False
-	| otherwise = allEq xs y
+allEq xs y = length (filterBreak (== y) xs) == (length xs)
 
 pos :: (Eq a) => [a] -> a -> Int
 pos [] _ = -1
-pos (x:xs) y
-    | not $ elem y (x:xs) = -1
+pos a@(x:xs) y
+    | notElem y a = -1
     | x == y =  0
     | otherwise = 1 + pos xs y
 
