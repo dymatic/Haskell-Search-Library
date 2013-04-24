@@ -7,8 +7,8 @@ module WordStat(
 	) where
 
 import Data.List
-import HelperMath.Aux
-import HelperLists.AuxList
+import LibHaskell.Math.LibAlgebra
+import LibHaskell.LibLists
 
 
 -- Get the same element from another range as one element of the first range.

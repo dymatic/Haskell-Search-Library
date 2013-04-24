@@ -1,4 +1,4 @@
-module HelperMath.Aux(
+module LibHaskell.Math.LibAlgebra(
       avg
 	, sqr
 	, stdDev
