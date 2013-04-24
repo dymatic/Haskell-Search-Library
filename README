@@ -7,4 +7,4 @@ These libraries work surprisingly well since I just fudged the algorithm. Basica
 More support and a better algorithm. I plan to add file support before I abandon the library and I intent to fix the length variance issue.
 
 --License
-Assume that these libraries are written under the GNU LGPL. 
+BJLPL 

@@ -173,6 +173,6 @@ byRight [] = []
 byRight ((x,y):xs) = 
  let lesserSorted =  byRight [(a,b) | (a,b) <- xs, b <= y]
      greaterSorted = byRight [(a,b) | (a,b) <- xs, b > y]
- in lesserSorted ++ [(x,y)] ++ greaterSorted
+ in lesserSorted ++ [x] ++ greaterSorted
 
 
