@@ -37,4 +37,6 @@ isSimilarList :: [String] -> [String] -> Bool
 isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
 					  in mostly values True
 
---Later make a function that can tell you which list is more similar (think: QS)
+mostSimilarWord :: [String] -> String -> String
+mostSimilarWord xs y = (fst (grab (byRight tups)))
+	where tups = sew xs $ map (\c -> ((abs $ (wordNumber y - wordNumber c)) + ((abs ((length y) - (length c)))*3))) xs
