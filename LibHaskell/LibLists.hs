@@ -31,6 +31,9 @@ module LibHaskell.LibLists(
  ,pop
  ,grab
  ,lst
+ ,kill
+ ,oneMore
+ ,splitOn
 ) where
 
 -- For general lists not biased to a type.
@@ -198,11 +201,11 @@ byRight ((x,y):xs) =
 
 --Pop the head off of a list.
 pop :: [a] -> [a]
-pop (x:xs) = xs
+pop (_:xs) = xs
 
 --Grab the first element of a list.
 grab :: [a] -> a
-grab (x:xs) = x
+grab (x:_) = x
 
 --Take the last element of a list.
 lst :: [a] -> a
@@ -226,3 +229,21 @@ posin (x:xs) b
 positions :: (Eq a) => [a] -> a -> [Int]
 positions [] _ = []
 positions x b = map (\c -> (length x) - c) $ posin x b
+
+--Remove the rest of the list
+kill :: [a] -> Int -> [a]
+kill [] _ = []
+kill (x:xs) c
+  | c <= 0 = x:[]
+  | otherwise = x : kill xs (c - 1)
+
+--Returns the elment after a list within a list.
+oneMore ::(Eq a) => [a] -> [a] -> [a]
+oneMore x y = kill (strt x (posList x y)) ((length y))
+
+--Break a list on every occurrence of an element.
+splitOn :: (Eq a) => [a] -> a -> [[a]]
+splitOn [] _ = []
+splitOn xs c
+	| c `elem` xs = (filterBreak (/= c) xs) : splitOn (after xs c) c
+	| otherwise = xs:[]
