@@ -34,6 +34,7 @@ module LibHaskell.LibLists(
  ,kill
  ,oneMore
  ,splitOn
+ ,lastx
 ) where
 
 -- For general lists not biased to a type.
@@ -247,3 +248,10 @@ splitOn [] _ = []
 splitOn xs c
 	| c `elem` xs = (filterBreak (/= c) xs) : splitOn (after xs c) c
 	| otherwise = xs:[]
+
+--Get the last x elements from a list.
+lastx :: [a] -> Int -> [a]
+lastx []  _ = []
+lastx a@(x:xs) b
+  | (length a) <= b = x : lastx xs b
+  | otherwise = lastx xs b
