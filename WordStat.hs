@@ -10,10 +10,6 @@ import Data.List
 import LibHaskell.Math.LibAlgebra
 import LibHaskell.LibLists
 
-
--- Get the same element from another range as one element of the first range.
-refPos :: (Eq a) => [a] -> [b] -> a -> b
-refPos r1 r2 e1 = r2 !! let x = (r1 `pos` e1) in (if x < 0 then 0 else x)
 --Returns first of a list in the event of a failure.
 
 letterNumber :: Char -> Int 
