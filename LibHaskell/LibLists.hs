@@ -41,6 +41,13 @@ module LibHaskell.LibLists(
  ,cond
  ,notCond
  ,contains
+ ,removeLeading
+ ,replaceAll
+ ,replaceAllOf
+ ,unit
+ ,accuracy
+ ,excedes
+ ,ses
 ) where
 
 -- For general lists not biased to a type.
@@ -286,8 +293,41 @@ cond f1 f2 c = if (f1 c) then (f2 c) else c
 notCond  :: (a -> Bool) -> (a -> a) -> a -> a
 notCond f1 f2 c = if (not (f1 c)) then (f2 c) else c
 
+--Is a list found within a larger list?
 contains :: (Eq a) => [a] -> [a] -> Bool
 contains [] _ = False
 contains a@(x:xs) b
   | (take (length b) a) == b = True
   | otherwise = contains xs b
+
+--Remove all elements from the beginning of a list.
+removeLeading ::(Eq a) => [a] -> a -> [a]
+removeLeading [] _ = []
+removeLeading a@(x:xs) b
+  | x == b = removeLeading xs b
+  | otherwise = a 
+
+--Replace all occurences of a match.
+replaceAll :: (Eq a) => [a] -> (a,a) -> [a]
+replaceAll [] _ = []
+replaceAll (x:xs) (a,b)
+  | (x == a) = b : replaceAll xs (a,b)
+  | otherwise = x : replaceAll xs (a,b)
+
+--Replace that uses lists of tupples.
+replaceAllOf :: (Eq a) => [a] -> [(a,a)] -> [a]
+replaceAllOf x [] = x
+replaceAllOf x ((a,b):ys) = replaceAll (replaceAllOf x ys) (a,b)
+
+-- Run "Unit Tests"
+unit :: (Eq a) => [a] -> [([a] -> Bool)] -> Int -> Bool
+unit a b x = excedes (map (\c -> (c a)) b) True x
+
+accuracy :: [Bool] -> Int -> Bool
+accuracy x y = excedes x True y
+
+excedes :: (Eq a) => [a] -> a -> Int -> Bool
+excedes a x c = (occurences a x) >= c
+
+ses ::(Eq a) => [a] -> [a] -> Bool
+ses a b = and [((grab a) == (grab b)),((pop a)==(pop b))]

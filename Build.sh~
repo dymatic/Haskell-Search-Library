@@ -8,8 +8,6 @@ read -p "Clean up the object files? [Enter]"
   find . -name "*.o" -exec rm -f '{}' +
   find . -name "*.hi" -exec rm -f '{}' +
 
-  rm -rf ../parrotBot/StatAnal
-  cp -R ../StatAnal ../parrotBot/StatAnal
 read -p "Commit the changes to git?"
   git add *
   git add -u

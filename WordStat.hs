@@ -4,6 +4,9 @@ module WordStat(
 	, wordNumber
 	, isSimilarWord 
 	, isSimilarList
+	, mostSimilarWord
+	, similarLetters
+	, scoreAccuracy'
 	) where
 
 import Data.List
@@ -20,14 +23,11 @@ wordNumber xs = sum $ map letterNumber xs
 
 -- Is length the same? Or is the word similar?
 isSimilarWord :: String -> String -> Bool
-isSimilarWord w1 w2 = or [and 
-							[stdDev [realToFrac ws1, realToFrac ws2] < realToFrac (lw1 + lw2),
-						    abs (lw1 - lw2) < 5],
-						  (lw1 == lw2)]
-						where ws1 = wordNumber w1
-						      ws2 = wordNumber w2
-						      lw1 = length w1
-						      lw2 = length w2
+isSimilarWord w1 w2 = (100 - (scoreAccuracy' (w1,w2) [(similarLetters,33),
+										         (ses,33),
+										         (similarLengths,33)])) <= 33
+
+								
 
 isSimilarList :: [String] -> [String] -> Bool
 isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
@@ -36,3 +36,22 @@ isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
 mostSimilarWord :: [String] -> String -> String
 mostSimilarWord xs y = (fst (grab (byRight tups)))
 	where tups = sew xs $ map (\c -> ((abs $ (wordNumber y - wordNumber c)) + ((abs ((length y) - (length c)))*3))) xs
+
+similarLetters :: String -> String -> Bool
+similarLetters x y = (abs (wordNumber x) - (wordNumber y)) <= (abs ((length x) - (length y)))  
+
+similarLengths :: String -> String -> Bool
+similarLengths a b = and [(d < la),
+						  (d < lb)]
+	where
+		d = (abs $ (length a) - (length b))
+		la = (length a)
+		lb = (length b)
+
+scoreAccuracy' :: ([a],[a]) -> [(([a] -> [a] -> Bool),Int)] -> Int
+scoreAccuracy' _ [] = 0
+scoreAccuracy' (a,b) w = score [c | (f,c) <- w, (f a b)]
+
+score :: [Int] -> Int
+score [] = 0
+score (x:xs) = x + score xs
