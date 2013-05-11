@@ -49,5 +49,4 @@ similarLengths a b = and [(d < la),
 		lb = (length b)
 
 score :: ([a],[a]) -> [(([a] -> [a] -> Bool),Int)] -> Int
-score _ [] = 0
 score (a,b) w = sum [c | (f,c) <- w, (f a b)]
