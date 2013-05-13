@@ -28,7 +28,6 @@ isSimilarWord w1 w2 = (100 - (score (w1,w2) [(similarLetters,33),
 										         (similarLengths,33)])) <= 33
 
 								
-
 isSimilarList :: [String] -> [String] -> Bool
 isSimilarList xs ys = let values = map (\(a,b) -> isSimilarWord a b) $ zip xs ys
 					  in mostly values True

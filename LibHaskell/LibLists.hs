@@ -52,6 +52,8 @@ module LibHaskell.LibLists(
  ,nav
  ,compress
  ,intersperse
+ ,at
+ ,howMany
 ) where
 
 -- For general lists not biased to a type.
@@ -355,3 +357,12 @@ compress (x:xs) = x ++ compress xs
 intersperse :: [a] -> a -> [a]
 intersperse [] _ = []
 intersperse (x:xs) y = x:y: intersperse xs y
+
+at :: [a] -> Int -> a
+at [] _ = error "Overload on shortened list"
+at (x:xs) y
+  | (y == 0) = x
+  | otherwise = at xs (y - 1) 
+
+howMany :: [a] -> (a -> Bool) -> Int
+howMany x f = length $ filter f x
